@@ -1,39 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./global.css";
 import "./App.css";
 import "./Sidebar.css";
+import "./Main.css";
+import api from "./services/api";
+import DevItem from "./components/DevItem";
+import { IoIosCode } from "react-icons/io";
 
+import DevForm from "./components/DevForm";
 export default function App() {
+  const [devs, setDevs] = useState([]);
+
+  useEffect(() => {
+    async function loadDevs() {
+      const response = await api.get("/devs");
+
+      setDevs(response.data);
+    }
+    loadDevs();
+  }, []);
+
+  async function handleAddDev(data) {
+    const response = await api.post("/devs", data);
+
+    setDevs([...devs, response.data]);
+  }
+
   return (
     <div id="app">
       <aside>
-        <strong>Cadastrar</strong>
-        <form>
-          <div className="input-block">
-            <label htmFor="github_username">Usuário do github</label>
-            <input name="github_username" id="github_username" required />
-          </div>
-
-          <div className="input-block">
-            <label htmFor="techs">Tecnologias</label>
-            <input name="github_username" id="github_username" required />
-          </div>
-
-          <div className="input-group">
-            <div className="input-block">
-              <label htmFor="latitude">Latitude</label>
-              <input name="latitude" id="latitude" required />
-            </div>
-
-            <div className="input-block">
-              <label htmFor="longitude">Longitude</label>
-              <input name="longitude" id="longitude" required />
-            </div>
-          </div>
-          <button type="submit">Salvar</button>
-        </form>
+        <div className="logo">
+          <IoIosCode />
+        </div>
+        <strong>Smart Devs</strong>
+        <DevForm onSubmit={handleAddDev} />
       </aside>
-      <main></main>
+
+      <main>
+        <ul>
+          {devs.map(dev => (
+            <DevItem dev={dev} key={dev._id} />
+          ))}
+        </ul>
+      </main>
     </div>
   );
 }
