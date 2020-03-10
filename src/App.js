@@ -32,7 +32,7 @@ export default function App() {
         <div className="logo">
           <IoIosCode />
         </div>
-        <strong>Smart Devs</strong>
+        <strong>Smart FindDevs</strong>
         <DevForm onSubmit={handleAddDev} />
       </aside>
 
