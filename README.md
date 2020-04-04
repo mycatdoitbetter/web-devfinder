@@ -10,6 +10,8 @@
 
 </p>
 
+<span>I've use the Insomnia to manage the http methods, you can get the <a href="https://github.com/mycatdoitbetter/frontend-devfinder/blob/master/demo/Insomnia%20smart%20devfinder%20configs.json">configuration file</a> here</span>
+
 To init the Frontend aplication in React, do the follow lines:
 ```bash
 cd web-devfinder
